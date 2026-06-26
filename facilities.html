@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Facilities - ProstaCare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    
+    <!-- Leaflet CSS for Maps (OpenStreetMap) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <style>
+        .facilities-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            padding: 2rem 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: calc(100vh - 80px); /* Fill remaining viewport */
+        }
+        @media (max-width: 900px) {
+            .facilities-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            height: 100%;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .search-box input {
+            flex-grow: 1;
+            padding: 0.8rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--text-primary);
+        }
+        @media (prefers-color-scheme: dark) {
+            .search-box input {
+                background: rgba(0, 0, 0, 0.2);
+            }
+        }
+        
+        .facilities-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-right: 0.5rem;
+            max-height: 70vh;
+        }
+        
+        .facility-card {
+            padding: 1rem;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .facility-card:hover {
+            border-color: var(--primary-color);
+            transform: translateX(5px);
+        }
+        .facility-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .facility-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .facility-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .map-container {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            height: 80vh; /* Fixed height for map */
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Keep map below header nav */
+        }
+        
+        /* Custom map pin styling support inside Leaflet */
+        .leaflet-popup-content-wrapper {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+        }
+        .leaflet-popup-tip {
+            background: var(--glass-bg);
+            border-top: 1px solid var(--glass-border);
+            border-left: 1px solid var(--glass-border);
+        }
+    </style>
+</head>
+<body>
+    <header class="glass-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">ProstaCare</a>
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="symptoms.html">Symptom Checker</a>
+                <a href="facilities.html" style="color: var(--primary-color)">Facilities</a>
+                <a href="appointments.html">Appointments</a>
+                <a href="assistant.html">AI Assistant</a>
+                <a href="education.html">Education</a>
+                <a href="login.html" class="btn btn-outline" id="auth-btn">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="facilities-layout fade-in visible">
+        <!-- Sidebar: Search & List -->
+        <div class="sidebar">
+            <div>
+                <h2 style="color: var(--primary-color); margin-bottom: 0.5rem;">Find Health Facilities</h2>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">Locate hospitals, cancer centers, and clinics near you.</p>
+                <div class="search-box">
+                    <input type="text" id="location-search" placeholder="Enter city or zip code...">
+                    <button id="search-btn" class="btn btn-primary">Search</button>
+                    <button id="geolocation-btn" class="btn btn-outline" title="Use my location">📍</button>
+                </div>
+            </div>
+            
+            <div class="facilities-list" id="facilities-list">
+                <!-- Facility cards injected here by JS -->
+                <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                    Use the search or location button above to find nearby facilities.
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Map Area -->
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+    <!-- Leaflet JS for Maps -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="js/facilities.js"></script>
+</body>
+</html>

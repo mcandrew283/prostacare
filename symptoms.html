@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Checker - ProstaCare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .checker-container {
+            padding: 4rem 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .question-card {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            box-shadow: var(--glass-shadow);
+        }
+        .question-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        .options {
+            display: flex;
+            gap: 1rem;
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--glass-border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        .option-label:hover {
+            border-color: var(--primary-color);
+            background: rgba(43, 108, 176, 0.05);
+        }
+        .option-label input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary-color);
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+        input[type="radio"]:checked + span {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        /* Custom styling for checked state via JS or CSS sibling selector */
+        .option-label:has(input[type="radio"]:checked) {
+            border-color: var(--primary-color);
+            background: rgba(43, 108, 176, 0.1);
+        }
+        
+        .result-card {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 2rem;
+            border-radius: 16px;
+        }
+        .result-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .result-high {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 2px solid #ef4444;
+            color: #b91c1c;
+        }
+        .result-moderate {
+            background-color: rgba(245, 158, 11, 0.1);
+            border: 2px solid #f59e0b;
+            color: #b45309;
+        }
+        .result-low {
+            background-color: rgba(34, 197, 94, 0.1);
+            border: 2px solid #22c55e;
+            color: #15803d;
+        }
+        .disclaimer {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        .dark .disclaimer {
+            background: rgba(255,255,255,0.05);
+        }
+    </style>
+</head>
+<body>
+    <header class="glass-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">ProstaCare</a>
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="symptoms.html" style="color: var(--primary-color)">Symptom Checker</a>
+                <a href="facilities.html">Facilities</a>
+                <a href="appointments.html">Appointments</a>
+                <a href="assistant.html">AI Assistant</a>
+                <a href="education.html">Education</a>
+                <a href="login.html" class="btn btn-outline" id="auth-btn">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="checker-container fade-in visible">
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h1 style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem;">Symptom Checker</h1>
+            <p style="font-size: 1.1rem; color: var(--text-secondary);">Answer a few questions to evaluate your potential risk. This tool is for informational purposes only and does not provide a medical diagnosis.</p>
+        </div>
+
+        <form id="symptom-form">
+            <!-- Q1 -->
+            <div class="question-card">
+                <div class="question-title">1. Do you experience difficulty urinating?</div>
+                <div class="options">
+                    <label class="option-label">
+                        <input type="radio" name="q1" value="yes" required> <span>Yes</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q1" value="no"> <span>No</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="question-card">
+                <div class="question-title">2. Do you have frequent urination, especially at night?</div>
+                <div class="options">
+                    <label class="option-label">
+                        <input type="radio" name="q2" value="yes" required> <span>Yes</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q2" value="no"> <span>No</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="question-card">
+                <div class="question-title">3. Have you noticed blood in your urine or semen?</div>
+                <div class="options">
+                    <label class="option-label">
+                        <input type="radio" name="q3" value="yes" required> <span>Yes</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q3" value="no"> <span>No</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="question-card">
+                <div class="question-title">4. Do you have a weak or interrupted urine flow?</div>
+                <div class="options">
+                    <label class="option-label">
+                        <input type="radio" name="q4" value="yes" required> <span>Yes</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q4" value="no"> <span>No</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="question-card">
+                <div class="question-title">5. Do you experience pain or discomfort in the pelvic area, lower back, or hips?</div>
+                <div class="options">
+                    <label class="option-label">
+                        <input type="radio" name="q5" value="yes" required> <span>Yes</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q5" value="no"> <span>No</span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <button type="submit" class="btn btn-primary btn-large" style="width: 100%; max-width: 300px;">Evaluate Risk</button>
+            </div>
+        </form>
+
+        <div id="result-container" class="result-card">
+            <h3 id="result-title"></h3>
+            <p id="result-desc" style="font-size: 1.1rem; margin-bottom: 2rem;"></p>
+            <div id="result-actions">
+                <a href="facilities.html" class="btn btn-primary">Find Nearby Facilities</a>
+                <a href="assistant.html" class="btn btn-outline" style="margin-left: 1rem;">Chat with AI Assistant</a>
+            </div>
+        </div>
+
+        <div class="disclaimer">
+            <strong>Medical Disclaimer:</strong> The results provided by this symptom checker are not a medical diagnosis. Prostate cancer can only be diagnosed by a qualified healthcare professional. If you are experiencing concerning symptoms, please consult a doctor immediately.
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/symptoms.js"></script>
+</body>
+</html>

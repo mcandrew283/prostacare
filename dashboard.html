@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ProstaCare</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons (Phosphor Icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Base Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- Dashboard Specific Styles -->
+    <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body class="dashboard-body">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="logo">ProstaCare</a>
+            <button class="close-btn" id="closeSidebar"><i class="ph ph-x"></i></button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active">
+                <i class="ph ph-squares-four"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="appointments.html" class="nav-item">
+                <i class="ph ph-calendar-check"></i>
+                <span>Appointments</span>
+            </a>
+            <a href="facilities.html" class="nav-item">
+                <i class="ph ph-hospital"></i>
+                <span>Facilities</span>
+            </a>
+            <a href="education.html" class="nav-item">
+                <i class="ph ph-book-open"></i>
+                <span>Education</span>
+            </a>
+            <a href="assistant.html" class="nav-item">
+                <i class="ph ph-robot"></i>
+                <span>AI Assistant</span>
+            </a>
+            <div class="nav-divider"></div>
+            <a href="#" class="nav-item" id="sidebarThemeToggle">
+                <i class="ph ph-palette"></i>
+                <span>Theme Settings</span>
+            </a>
+            <a href="#" class="nav-item" id="logoutBtn">
+                <i class="ph ph-sign-out"></i>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+        <!-- Top Navbar -->
+        <header class="top-nav glass-header">
+            <div class="nav-left">
+                <button class="menu-toggle" id="openSidebar">
+                    <i class="ph ph-list"></i>
+                </button>
+                <div class="search-bar">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+            </div>
+            
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">
+                    <i class="ph ph-moon"></i>
+                </button>
+                
+                <div class="notification-container">
+                    <button class="icon-btn" id="notifToggle">
+                        <i class="ph ph-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <!-- Notification Dropdown -->
+                    <div class="dropdown-panel glass-card" id="notifPanel">
+                        <h4>Notifications</h4>
+                        <div class="notif-list">
+                            <div class="notif-item unread">
+                                <div class="notif-icon"><i class="ph ph-calendar-check"></i></div>
+                                <div class="notif-content">
+                                    <p>Upcoming appointment tomorrow</p>
+                                    <small>2 hours ago</small>
+                                </div>
+                            </div>
+                            <div class="notif-item">
+                                <div class="notif-icon"><i class="ph ph-file-text"></i></div>
+                                <div class="notif-content">
+                                    <p>New educational article published</p>
+                                    <small>Yesterday</small>
+                                </div>
+                            </div>
+                            <div class="notif-item">
+                                <div class="notif-icon"><i class="ph ph-user"></i></div>
+                                <div class="notif-content">
+                                    <p>Profile update successful</p>
+                                    <small>2 days ago</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-dropdown-container">
+                    <div class="profile-trigger" id="profileToggle">
+                        <div class="avatar">
+                            <i class="ph ph-user"></i>
+                        </div>
+                        <span class="user-name-display">Loading...</span>
+                        <i class="ph ph-caret-down"></i>
+                    </div>
+                    <!-- Profile Dropdown -->
+                    <div class="dropdown-panel glass-card" id="profilePanel">
+                        <a href="#" class="dropdown-item" id="dropdownThemeToggle"><i class="ph ph-palette"></i> Toggle Theme</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item text-danger" id="dropdownLogoutBtn"><i class="ph ph-sign-out"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <main class="dashboard-content fade-in">
+            <div class="welcome-banner glass-card">
+                <div class="welcome-text">
+                    <h1 id="welcomeText">Welcome back, User!</h1>
+                    <p>Here's what's happening with your account today.</p>
+                    <div class="health-summary">
+                        <i class="ph ph-heartbeat"></i>
+                        <div>
+                            <strong>Health Summary</strong>
+                            <span>Last check: Low risk. Keep it up!</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-completion glass-card">
+                    <div class="completion-header">
+                        <span>Profile Setup</span>
+                        <span class="completion-percent">80%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 80%;"></div>
+                    </div>
+                    <a href="#" class="completion-link">
+                        <span>Complete missing details</span>
+                        <i class="ph ph-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="stat-card glass-card">
+                    <div class="stat-header">
+                        <h3>Appointments</h3>
+                        <div class="stat-icon bg-primary"><i class="ph ph-calendar"></i></div>
+                    </div>
+                    <div class="stat-value">1</div>
+                    <p class="stat-desc">Upcoming this week</p>
+                </div>
+                
+                <div class="stat-card glass-card">
+                    <div class="stat-header">
+                        <h3>Symptom Checks</h3>
+                        <div class="stat-icon bg-secondary"><i class="ph ph-heartbeat"></i></div>
+                    </div>
+                    <div class="stat-value">3</div>
+                    <p class="stat-desc">Completed total</p>
+                </div>
+                
+                <div class="stat-card glass-card">
+                    <div class="stat-header">
+                        <h3>Messages</h3>
+                        <div class="stat-icon bg-accent"><i class="ph ph-chat-circle"></i></div>
+                    </div>
+                    <div class="stat-value">2</div>
+                    <p class="stat-desc">Unread messages</p>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Activity Chart -->
+                <div class="chart-container glass-card">
+                    <div class="section-header">
+                        <h2>Activity Overview</h2>
+                    </div>
+                    <div style="position: relative; height: 300px;">
+                        <canvas id="activityChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions glass-card">
+                    <div class="section-header">
+                        <h2>Quick Actions</h2>
+                    </div>
+                    <div class="actions-list">
+                        <a href="appointments.html" class="action-btn">
+                            <span class="action-icon"><i class="ph ph-calendar-plus"></i></span>
+                            <span class="action-text">Book Appointment</span>
+                        </a>
+                        <a href="symptoms.html" class="action-btn">
+                            <span class="action-icon"><i class="ph ph-stethoscope"></i></span>
+                            <span class="action-text">Check Symptoms</span>
+                        </a>
+                        <a href="assistant.html" class="action-btn">
+                            <span class="action-icon"><i class="ph ph-robot"></i></span>
+                            <span class="action-text">Ask Assistant</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Activity List -->
+            <div class="recent-activity glass-card">
+                <div class="section-header">
+                    <h2>Recent Activity</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="activity-feed">
+                    <div class="activity-item">
+                        <div class="activity-icon"><i class="ph ph-check-circle"></i></div>
+                        <div class="activity-details">
+                            <h4>Logged symptom check</h4>
+                            <p>Risk level: Low</p>
+                        </div>
+                        <div class="activity-time">2 days ago</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon"><i class="ph ph-calendar-check"></i></div>
+                        <div class="activity-details">
+                            <h4>Booked appointment</h4>
+                            <p>City Hospital with Dr. Smith</p>
+                        </div>
+                        <div class="activity-time">1 week ago</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Supabase Core -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <!-- Dashboard Logic -->
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

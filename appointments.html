@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - ProstaCare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .appointments-container {
+            padding: 4rem 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .booking-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .booking-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        input, select {
+            padding: 0.8rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            input, select {
+                background: rgba(0, 0, 0, 0.2);
+            }
+            input[type="date"]::-webkit-calendar-picker-indicator,
+            input[type="time"]::-webkit-calendar-picker-indicator {
+                filter: invert(1);
+            }
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(43, 108, 176, 0.2);
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            display: none;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .alert-success {
+            background-color: rgba(220, 252, 231, 0.8);
+            color: #15803d;
+            border: 1px solid #86efac;
+        }
+
+        .alert-error {
+            background-color: rgba(254, 226, 226, 0.8);
+            color: #b91c1c;
+            border: 1px solid #fca5a5;
+        }
+        
+        #auth-warning {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid #fbd38d;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        #auth-warning.visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header class="glass-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">ProstaCare</a>
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="symptoms.html">Symptom Checker</a>
+                <a href="facilities.html">Facilities</a>
+                <a href="appointments.html" style="color: var(--primary-color)">Appointments</a>
+                <a href="assistant.html">AI Assistant</a>
+                <a href="education.html">Education</a>
+                <a href="login.html" class="btn btn-outline" id="auth-btn">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="appointments-container fade-in visible">
+        
+        <div id="auth-warning">
+            <h3 style="color: #b45309; margin-bottom: 0.5rem;">Authentication Required</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">You must be logged in to book an appointment.</p>
+            <a href="login.html" class="btn btn-primary">Log In</a>
+        </div>
+
+        <div class="booking-card" id="booking-section">
+            <h2>Book an Appointment</h2>
+            <form id="booking-form">
+                
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="facility">Select Health Facility</label>
+                    <select id="facility" required>
+                        <option value="" disabled selected>Loading facilities...</option>
+                        <!-- Options injected by JS -->
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Preferred Date</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Preferred Time</label>
+                        <input type="time" id="time" required>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 2rem;">
+                    <label for="reason">Reason for Visit (Optional)</label>
+                    <input type="text" id="reason" placeholder="e.g. Follow-up, initial screening, high risk symptom result">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">Confirm Booking</button>
+            </form>
+
+            <div id="booking-message" class="alert"></div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/appointments.js"></script>
+</body>
+</html>

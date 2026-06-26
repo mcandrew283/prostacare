@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prostate Cancer Support & Early Symptom Assistance</title>
+    <!-- Modern Typography: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <header class="glass-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">ProstaCare</a>
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="symptoms.html">Symptom Checker</a>
+                <a href="facilities.html">Facilities</a>
+                <a href="appointments.html">Appointments</a>
+                <a href="assistant.html">AI Assistant</a>
+                <a href="education.html">Education</a>
+                <a href="login.html" class="btn btn-primary" id="auth-btn">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section fade-in" id="heroSection">
+            <div class="hero-background" id="heroBg"></div>
+            <div class="hero-overlay"></div>
+            <div class="container hero-content">
+                <h2 class="text-white">Empowering Your Health Journey</h2>
+                <p class="text-white">Support, assessment, and guidance for prostate cancer awareness and early symptom
+                    detection.</p>
+                <div class="hero-actions">
+                    <a href="symptoms.html" class="btn btn-large btn-primary">Check Symptoms Now</a>
+                    <a href="education.html" class="btn btn-large btn-outline text-white"
+                        style="border-color: white;">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Information Cards Section Example -->
+        <section class="container features-section fade-in">
+            <div class="feature-card glass-card">
+                <h3>Symptom Checker</h3>
+                <p>Take an interactive assessment to evaluate your risk level.</p>
+            </div>
+            <div class="feature-card glass-card">
+                <h3>Find Facilities</h3>
+                <p>Locate nearby clinics and hospitals instantly.</p>
+            </div>
+            <div class="feature-card glass-card">
+                <h3>AI Assistant</h3>
+                <p>Get medical and nutritional guidance from our intelligent agent.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script>
+        // Simple entry animation logic
+        document.addEventListener("DOMContentLoaded", () => {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('visible');
+                }, index * 200);
+            });
+
+            // Dynamic background mouse follow effect
+            const heroSection = document.getElementById('heroSection');
+            const heroBg = document.getElementById('heroBg');
+
+            if (heroSection && heroBg) {
+                heroSection.addEventListener('mousemove', (e) => {
+                    // Calculate relative mouse position
+                    const xPos = (e.clientX / window.innerWidth - 0.5) * 30;
+                    const yPos = (e.clientY / window.innerHeight - 0.5) * 30;
+
+                    // Move background slightly opposite to cursor
+                    heroBg.style.transform = `translate(${-xPos}px, ${-yPos}px) scale(1.05)`;
+                });
+
+                heroSection.addEventListener('mouseleave', () => {
+                    heroBg.style.transition = 'transform 0.5s ease-out';
+                    heroBg.style.transform = `translate(0, 0) scale(1)`;
+                });
+
+                heroSection.addEventListener('mouseenter', () => {
+                    heroBg.style.transition = 'transform 0.1s ease-out';
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

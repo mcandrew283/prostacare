@@ -1,0 +1,285 @@
+Project Title:
+Prostate Cancer Support and Early Symptom Assistance Web Application
+
+Project Description:
+Build a modern, responsive web-based platform designed to assist prostate cancer patients and individuals experiencing possible symptoms. The system should help users assess symptoms, find nearby health facilities, schedule appointments, and receive medical and nutritional guidance through an AI assistant.
+
+The application will use Supabase as the backend service, including authentication, database storage, and APIs.
+
+Core Objectives
+
+Help users identify possible prostate cancer symptoms early.
+
+Enable users to locate nearby health facilities.
+
+Allow appointment scheduling with medical facilities.
+
+Provide nutritional and medical advice through an intelligent AI agent.
+
+Offer educational information about prostate health and prevention.
+
+Key Features
+1. User Authentication
+
+Use Supabase Authentication for:
+
+Secure sign-up and login
+
+Email/password authentication
+
+User profile management
+
+Password reset functionality
+
+User profile should store:
+
+Name
+
+Age
+
+Location
+
+Medical history (optional)
+
+Appointment records
+
+2. Symptom Checker
+
+Create an interactive questionnaire for prostate cancer related symptoms.
+
+Example questions:
+
+Difficulty urinating
+
+Frequent urination (especially at night)
+
+Blood in urine
+
+Weak urine flow
+
+Pelvic discomfort
+
+After submission the system should:
+
+Evaluate responses
+
+Show a risk level
+
+Low risk
+
+Moderate risk
+
+High risk
+
+If risk is high, recommend visiting a medical facility immediately.
+
+Store symptom checks in the Supabase database.
+
+3. Nearby Health Facility Locator
+
+Allow users to:
+
+Detect location automatically using geolocation
+
+Enter their city manually
+
+Display nearby:
+
+Hospitals
+
+Cancer centers
+
+Clinics
+
+Show:
+
+Facility name
+
+Distance
+
+Contact information
+
+Directions
+
+Integrate a map using Google Maps API or OpenStreetMap.
+
+4. Appointment Scheduling
+
+Allow users to:
+
+View available health facilities
+
+Select appointment date and time
+
+Book appointments
+
+Appointments should be stored in Supabase tables.
+
+Include:
+
+Appointment calendar
+
+Appointment status
+
+Notifications
+
+5. AI Medical and Nutrition Assistant
+
+Create an AI chat assistant that can:
+
+Answer general prostate health questions
+
+Provide lifestyle advice
+
+Suggest prostate-friendly diets
+
+Provide guidance on symptoms
+
+Important rules for the AI agent:
+
+Always include a medical disclaimer
+
+Encourage users to consult medical professionals
+
+Avoid making final medical diagnoses
+
+6. Educational Resources
+
+Create a section with articles about:
+
+Prostate cancer symptoms
+
+Prevention strategies
+
+Screening tests
+
+Treatment options
+
+Diet and lifestyle tips
+
+7. Notifications
+
+Provide notifications for:
+
+Upcoming appointments
+
+Symptom follow-ups
+
+Health tips
+
+Technical Requirements
+Frontend
+
+Build a responsive frontend using:
+
+HTML5
+
+CSS3
+
+JavaScript
+
+Optional frameworks: React or Next.js
+
+Design should be:
+
+Mobile friendly
+
+Accessible for older users
+
+Simple and clear
+
+Backend and Database
+
+Use Supabase for:
+
+PostgreSQL database
+
+Authentication
+
+API endpoints
+
+Data storage
+
+Security policies
+
+Example tables:
+
+Users
+
+id
+
+name
+
+email
+
+age
+
+location
+
+Symptoms_Checks
+
+id
+
+user_id
+
+responses
+
+risk_level
+
+date
+
+Health_Facilities
+
+id
+
+name
+
+location
+
+contact
+
+services
+
+Appointments
+
+id
+
+user_id
+
+facility_id
+
+appointment_date
+
+status
+
+Security and Privacy
+
+Implement:
+
+Secure authentication
+
+Data encryption
+
+Role-based access control
+
+Health data privacy practices
+
+Include a medical disclaimer clearly stating the system is for informational support only.
+
+Deliverables
+
+Generate:
+
+Complete application architecture
+
+Supabase database schema
+
+Frontend UI pages
+
+Backend API logic using Supabase
+
+AI chatbot interface
+
+Health facility locator with maps
+
+Appointment booking module
